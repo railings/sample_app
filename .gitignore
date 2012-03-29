@@ -17,5 +17,8 @@
 
 /.idea
 
+# Ignore backup files
+*~
+
 # Bundler & RVM integration to ensure commands are run in correct environment
 /bundler_stubs
