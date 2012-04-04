@@ -1,4 +1,4 @@
-describe ApplicationHelper do
+describe "ApplicationHelper" do
 
   describe "full title" do
     it "should include the page name" do
