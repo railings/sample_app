@@ -32,9 +32,12 @@ describe "Authentication" do
       before { valid_signin(user) }
 
       it { should have_selector('title', text: user.name) }
-      it { should have_link('Profile', href: user_path(user)) }
-      it { should have_link('Settings', href: edit_user_path(user)) }
-      it { should have_link('Sign out', href: signout_path) }
+
+      it { should have_link('Users',     href: users_path) }
+      it { should have_link('Profile',   href: user_path(user)) }
+      it { should have_link('Settings',  href: edit_user_path(user)) }
+      it { should have_link('Sign out',  href: signout_path) }
+
       it { should_not have_link('Sign in', href: signin_path) }
 
       describe "followed by signout" do
@@ -71,13 +74,17 @@ describe "Authentication" do
           end
 
           describe "after signing in" do
-
             it "should render the desired protected page" do
               page.should have_selector('title', text: 'Edit user')
             end
           end
         end
-      end
+
+        describe "visiting the user index" do
+          before { visit users_path }
+          it { should have_selector('title', text: 'Sign in') }
+        end
+      end # Users controller
     end
 
     describe "as wrong user" do
