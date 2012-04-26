@@ -45,6 +45,13 @@ describe "Authentication" do
 
         it { should have_link("Sign in") }
       end
+
+=begin
+      describe "followed by signin again" do
+        before { valid_signin(user) }
+        specify { should redirect_to(root_path)}
+      end
+=end
     end
   end
 
@@ -76,6 +83,14 @@ describe "Authentication" do
           describe "after signing in" do
             it "should render the desired protected page" do
               page.should have_selector('title', text: 'Edit user')
+            end
+
+            describe "when signing in again" do
+              before { valid_signin(user) }
+
+              it "should render the default profile page" do
+                page.should have_selector('title', text: user.name)
+              end
             end
           end
         end
