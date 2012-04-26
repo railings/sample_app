@@ -87,6 +87,18 @@ describe "Authentication" do
       end # Users controller
     end
 
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+
+      before { valid_signin non_admin }
+
+      describe "submitting a DELETE request to Users#destroy action" do
+        before { delete user_path(user)}
+        specify { response.should redirect_to(root_path)}
+      end
+    end
+
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }

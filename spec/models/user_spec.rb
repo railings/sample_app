@@ -14,8 +14,10 @@ require 'spec_helper'
 describe User do
 
   before do
-    @user = User.new(name: "Example User", email: "example@somewhere.com",
-                     password: "foobar", password_confirmation: "foobar")
+    @user = User.new(name: "Example User",
+                     email: "example@somewhere.com",
+                     password: "foobar",
+                     password_confirmation: "foobar")
   end
 
   subject { @user }
@@ -26,9 +28,16 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
+  it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
 
   it { should be_valid }
+  it { should_not be_admin }
+
+  describe "with admin attribute set to true" do
+    before { @user.toggle!(:admin) }
+    it { should be_admin }
+  end
 
   describe "when name is not present" do
     before { @user.name = " " }
