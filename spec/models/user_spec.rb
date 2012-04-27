@@ -148,5 +148,12 @@ describe User do
       @user.microposts.should == [newer_micropost, older_micropost]
     end
 
+    it "deleting user should destroy associated microposts" do
+      microposts = @user.microposts
+      @user.destroy
+      microposts.each do |micropost|
+        Micropost.find_by_id(micropost.id).should be_nil
+      end
+    end
   end
 end
